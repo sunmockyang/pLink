@@ -3,7 +3,7 @@ function PLDroplet(){
 
 	this.speed = new Vector(0,0);
 	this.pos = new Vector(300, 300);
-	this.colour = '#'+Math.floor(Math.random()*16777215).toString(16);
+	this.colour = (new Color(255, Math.random() * 50 + 200, 255)).toHex();
 }
 
 PLDroplet.prototype = new PLObject();
