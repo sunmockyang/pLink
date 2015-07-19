@@ -1,0 +1,19 @@
+body {
+	/*background-color: #2C3A57;*/
+}
+
+canvas {
+	border: solid gray 2px;
+	max-width: 700px;
+	display: block;
+	margin: 0 auto;
+}
+
+#title{
+	margin: 0 auto;
+	max-width: 700px;
+	display: block;
+	text-align: center;
+	margin-bottom: 10px;
+	font-family: monospace;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<html>
+<head>
+	<title>.plink.</title>
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<div id="title">plink</div>
+<canvas id="canvas">Canvas element should be here but its not....</canvas>
+<script type="text/javascript">
+	var plink;
+
+	function main()
+	{
+		plink = new Plink(document.getElementById('canvas'));
+	}
+
+	window.onload = main;
+</script>
+
+<script type="text/javascript" src="js/Math.js"></script>
+<script type="text/javascript" src="js/Bounds.js"></script>
+<script type="text/javascript" src="js/plink.js"></script>
+<script type="text/javascript" src="js/PLCamera.js"></script>
+<script type="text/javascript" src="js/PLDroplet.js"></script>
+<script type="text/javascript" src="js/PLImage.js"></script>
+</body>
+</html>
