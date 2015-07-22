@@ -32,6 +32,18 @@ PLCamera.prototype.draw = function() {
 		this.drawObjects[i].draw();
 		this.context.restore();
 	};
+
+	// draw line
+	var cameraSpaceCoord = this.getCameraSpace(this.followObj);
+	this.context.strokeStyle = "#F00"
+	this.context.beginPath();
+	this.context.moveTo(this.width/2, this.height/2);
+	this.context.lineTo(cameraSpaceCoord.x, cameraSpaceCoord.y);
+	this.context.stroke();
+};
+
+PLCamera.prototype.getCameraSpace = function(obj) {
+	return obj.pos.sub(this.center).add(new Vector(this.width/2, this.height/2));
 };
 
 function PLObject () {
