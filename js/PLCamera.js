@@ -33,13 +33,15 @@ PLCamera.prototype.draw = function() {
 		this.context.restore();
 	};
 
-	// draw line
-	var cameraSpaceCoord = this.getCameraSpace(this.followObj);
-	this.context.strokeStyle = "#F00"
-	this.context.beginPath();
-	this.context.moveTo(this.width/2, this.height/2);
-	this.context.lineTo(cameraSpaceCoord.x, cameraSpaceCoord.y);
-	this.context.stroke();
+	if (pLinkDebugMode) {
+		// draw line
+		var cameraSpaceCoord = this.getCameraSpace(this.followObj);
+		this.context.strokeStyle = "#F00"
+		this.context.beginPath();
+		this.context.moveTo(this.width/2, this.height/2);
+		this.context.lineTo(cameraSpaceCoord.x, cameraSpaceCoord.y);
+		this.context.stroke();
+	}
 };
 
 PLCamera.prototype.getCameraSpace = function(obj) {

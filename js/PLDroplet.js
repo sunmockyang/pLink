@@ -2,8 +2,8 @@ function PLDroplet(){
 	this.size = 5;
 
 	this.speed = new Vector(0,0);
-	this.pos = new Vector(300, 300);
-	this.colour = (new Color(255, Math.random() * 50 + 200, 255)).toHex();
+	this.pos = new Vector(500, 500);
+	this.colour = (new Color(Math.random() * 50 + 200, 255, 255)).toHex();
 }
 
 PLDroplet.prototype = new PLObject();
