@@ -27,17 +27,31 @@ function Plink(canvas){
 	// Setup input
 	this.mouse = new LibraryMouse(this.canvas);
 	this.mouse.addEventListener("mousemove", this.onMouseMove.bind(this));
+	this.mouse.addEventListener("mouseover", function(){});
+	this.mouse.addEventListener("mouseout", function(){});
+	this.mouse.addEventListener("mousedown", function(){});
+	this.mouse.addEventListener("mouseup", function(){});
 
 	this.run();
 };
 
 Plink.prototype.onMouseMove = function() {
 	if (pLinkDebugMode){
-		document.getElementById('mouse-library-debug').innerHTML = "x: " + this.mouse.x + " y: " + this.mouse.y;
+		var worldSpace = this.camera.convertCameraToWorldSpace(this.mouse.x, this.mouse.y);
+		document.getElementById('mouse-library-debug').innerHTML = "x: " + worldSpace.x
+		 + " y: " + worldSpace.y;
 	}
 };
 
 Plink.prototype.update = function() {
+	if (this.mouse.clicked) {
+		this.drops[0].setInput((this.mouse.x - this.canvas.width/2) / 1000, (this.mouse.y - this.canvas.height/2) / 1000);
+	}
+
+	for (var i = 1; i < this.drops.length; i++) {
+		this.drops[i].setInput(Math.random() - 0.5, Math.random() - 0.5)
+	};
+
 	for (var i = 0; i < this.drops.length; i++) {
 		this.drops[i].update();
 	};
@@ -46,7 +60,7 @@ Plink.prototype.update = function() {
 Plink.prototype.draw = function() {
 	this.camera.draw();
 
-	if (pLinkDebugMode) {
+	if (pLinkDebugMode && this.mouse.mouseover) {
 		this.context.strokeStyle = "#0FF"
 		this.context.beginPath();
 		this.context.moveTo(this.canvas.width/2, this.canvas.height/2);

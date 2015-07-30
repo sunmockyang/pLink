@@ -88,6 +88,10 @@ Vector.Lerp = function(from, to, t) {
     return to.sub(from).multiply(t).add(from);
 };
 
+Vector.Zero = function() {
+	return new Vector();
+}
+
 function Point (x, y) {
 	this.x = (x != undefined) ? x : 0;
 	this.y = (y != undefined) ? y : 0;
