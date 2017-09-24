@@ -54,16 +54,3 @@ PLCamera.prototype.convertWorldToCameraSpace = function(obj) {
 PLCamera.prototype.convertCameraToWorldSpace = function(x, y) {
 	return this.center.add(new Vector(x, y).sub(new Vector(this.width/2, this.height/2)));
 };
-
-function PLObject () {
-	this.context = null;
-	this.pos = new Vector();
-
-	this.draw = function() {
-		console.error("IMPLEMENT A DRAW FUNCTION");
-	};
-
-	this.addCamera = function(camera) {
-		this.context = camera.context;
-	}
-}
