@@ -1,8 +1,12 @@
-var pLinkDebugMode = false;
+var pLinkDebugMode = true;
 
 function Plink(canvas){
 	var width = 600;
 	var height = 600;
+
+	// Setup server
+	this.client = new PLClient(this.serverAddress);
+	this.isClientUpdateScheduled = true;
 
 	// Setup canvas
 	this.canvas = canvas;
@@ -14,6 +18,7 @@ function Plink(canvas){
 	this.camera = new PLCamera(this.context);
 	this.bg = new PLImage("img/1436770530303.jpg");
 	this.drops = [];
+	this.particles = [];
 
 	this.camera.addObject(this.bg);
 
@@ -31,9 +36,14 @@ function Plink(canvas){
 	this.mouse.addEventListener("mouseout", function(){});
 	this.mouse.addEventListener("mousedown", function(){});
 	this.mouse.addEventListener("mouseup", function(){});
+	this.mouse.addEventListener("click", this.onMouseClick.bind(this));
 
 	this.run();
 };
+
+Plink.prototype.serverAddress = "127.0.0.1";
+Plink.prototype.clientUpdateInterval = 250;
+Plink.prototype.numParticlesInExplosion = 10;
 
 Plink.prototype.onMouseMove = function() {
 	if (pLinkDebugMode){
@@ -41,6 +51,18 @@ Plink.prototype.onMouseMove = function() {
 		document.getElementById('mouse-library-debug').innerHTML = "x: " + worldSpace.x
 		 + " y: " + worldSpace.y;
 	}
+};
+
+Plink.prototype.onMouseClick = function() {
+	var worldSpace = this.camera.convertCameraToWorldSpace(this.mouse.x, this.mouse.y);
+	this.createExplosion(worldSpace.x, worldSpace.y);
+};
+
+Plink.prototype.createExplosion = function(x, y) {
+	for (var i = 0; i < this.numParticlesInExplosion; i++) {
+		this.particles.push(new PLParticle(x, y));
+		this.camera.addObject(this.particles[this.particles.length - 1]);
+	};
 };
 
 Plink.prototype.update = function() {
@@ -55,6 +77,16 @@ Plink.prototype.update = function() {
 	for (var i = 0; i < this.drops.length; i++) {
 		this.drops[i].update();
 	};
+
+	for (var i = 0; i < this.particles.length; i++) {
+		this.particles[i].update();
+	};
+
+	if (this.isClientUpdateScheduled) {
+		this.client.pushDropletUpdate(this.drops[0]);
+		this.client.send();
+		this.scheduleClientUpdate();
+	}
 };
  
 Plink.prototype.draw = function() {
@@ -68,9 +100,30 @@ Plink.prototype.draw = function() {
 		this.context.stroke();
 	}
 };
- 
+
+Plink.prototype.scheduleClientUpdate = function() {
+	this.isClientUpdateScheduled = false;
+	window.setTimeout((function(){this.isClientUpdateScheduled = true}).bind(this), this.clientUpdateInterval);
+};
+
 Plink.prototype.run = function(){this.update();this.draw();window.requestAnimationFrame(this.run.bind(this));}
 window.requestAnimationFrame = window.requestAnimationFrame ||
 	window.mozRequestAnimationFrame ||
 	window.webkitRequestAnimationFrame ||
 	window.msRequestAnimationFrame;
+
+var nextID = 0;
+
+function PLObject () {
+	this.context = null;
+	this.pos = new Vector();
+	this.id = nextID++;
+
+	this.draw = function() {
+		console.error("IMPLEMENT A DRAW FUNCTION");
+	};
+
+	this.addCamera = function(camera) {
+		this.context = camera.context;
+	}
+}
