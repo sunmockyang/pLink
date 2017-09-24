@@ -1,0 +1,7 @@
+Ideas
+
+- Swim around
+- Have statuses
+- Drop links
+	- open them in embedded iframes?
+- Need something for the background

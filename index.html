@@ -8,7 +8,8 @@
 </head>
 <body>
 <div id="title">plink</div>
-<canvas id="canvas">Canvas element should be here but its not....</canvas>
+<canvas id="canvas" class="center">Canvas element should be here but its not....</canvas>
+<div id="mouse-library-debug" class="center"></div>
 <script type="text/javascript">
 	var plink;
 
@@ -20,8 +21,10 @@
 	window.onload = main;
 </script>
 
-<script type="text/javascript" src="js/Math.js"></script>
-<script type="text/javascript" src="js/Bounds.js"></script>
+<script type="text/javascript" src="js/libs/Bounds.js"></script>
+<script type="text/javascript" src="js/libs/Color.js"></script>
+<script type="text/javascript" src="js/libs/Math.js"></script>
+<script type="text/javascript" src="js/libs/LibraryMouse.min.js"></script>
 <script type="text/javascript" src="js/plink.js"></script>
 <script type="text/javascript" src="js/PLCamera.js"></script>
 <script type="text/javascript" src="js/PLDroplet.js"></script>
